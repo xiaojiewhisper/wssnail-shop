@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: shop-order
+    component: gateway
+  name: shop-order
+  namespace: ks-wssnail-shop
+spec:
+  ports:
+    - name: http
+      port: 8091
+      protocol: TCP
+      targetPort: 8091
+  selector:
+    app: shop-order
+    component: gateway
+    tier: backend
+  sessionAffinity: None
+  type: ClusterIP

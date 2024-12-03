@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: shop-gateway
+    component: gateway
+  name: shop-gateway
+  namespace: ks-wssnail-shop-dev
+spec:
+  ports:
+    - name: http
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+  selector:
+    app: shop-gateway
+    component: gateway
+    tier: backend
+  sessionAffinity: None
+  type: NodePort

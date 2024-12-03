@@ -1,0 +1,46 @@
+server:
+  port: 9000
+jackson:
+  time-zone: GMT+8
+  date-format: yyyy-MM-dd HH:mm:ss
+spring:
+  application:
+    name: shop-gateway
+  servlet:
+    multipart:
+      enabled: true #开启文件上传
+      max-file-size: 200MB #限制文件上传大小为10M
+      file-size-threshold: 10MB #单个文件大小限制
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  data:
+    redis:
+      host: 39.99.233.57:6379
+      password: 123456
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 让gateway可以发现nacos中的微服务
+      routes:
+        - id: uaa_route
+          uri: lb://shop-uaa # lb指的是从nacos中按照名称获取微服务,并遵循负载均 衡策略
+          predicates:
+            - Path=/uaa/**
+          filters:
+            - StripPrefix=1
+        - id: commodity_route
+          uri: lb://shop-commodity
+          predicates:
+            - Path=/commodity/**
+          filters:
+            - StripPrefix=1
+        - id: order_route
+          uri: lb://shop-order
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=1
+
+

@@ -1,0 +1,38 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+  application:
+    name: shop-uaa
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      server-addr: nacos-headless.nacos:8848
+      config:
+        #前缀
+        prefix: shop-uaa
+        #扩展名
+        file-extension: yaml
+        #命名空间
+        namespace: d09ac217-6347-42ae-ba93-57cc8b65d841
+        #分组
+        group: DEV_GROUP
+        #开关
+        enabled: true
+        #动态刷新配置
+        refresh-enabled: true
+      discovery:
+        #是否开启nacos注册
+        enabled: true
+        #命名空间
+        namespace: d09ac217-6347-42ae-ba93-57cc8b65d841
+        #分组
+        group: DEV_GROUP
+  config:
+    import:
+      - nacos:shop-uaa-${spring.profiles.active}.yaml?refreshEnabled=true
+logging:
+  level:
+    com.alibaba.cloud.nacos.configdata: debug

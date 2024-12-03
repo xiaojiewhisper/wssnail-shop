@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: shop-uaa
+    component: service
+  name: shop-uaa
+  namespace: ks-wssnail-shop-dev
+spec:
+  ports:
+    - name: http
+      port: 8092
+      protocol: TCP
+      targetPort: 8092
+  selector:
+    app: shop-uaa
+    component: service
+    tier: backend
+  sessionAffinity: None
